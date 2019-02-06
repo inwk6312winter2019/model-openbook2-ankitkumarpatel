@@ -19,22 +19,20 @@ def maintenance_histogram(filename):
 		maintenance_types[line[12]]=maintenance_types.get(line[12],0)+1
 	return(maintenance_types)
 
-
-
-
-
-
-
-
-
-
-
-
-
+# List of unique owners for the streets ["OWN"]
+def unique_owners(filename):
+	lst = []
+        fin = open(filename,'r')
+	for line in fin:
+		line = line.split(",")
+		lst.append(line[11])
+	lst=list(dict.fromkeys(lst))
+	return(lst)
 
 fin = open('Street_Centrelines.csv','r')
 
-print(tuple_required('Street_Centrelines.csv'))
+#print(tuple_required('Street_Centrelines.csv'))
 
-print(maintenance_histogram('Street_Centrelines.csv'))
+#print(maintenance_histogram('Street_Centrelines.csv'))
 
+print(unique_owners('Street_Centrelines.csv'))
