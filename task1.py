@@ -1,5 +1,4 @@
 # model openbook 2 :   task 1
-
 # Easy: A tuple of (STR_NAME,FULL_NAME,FROM_STR,TO_STR) 
 
 def tuple_required(filename):
@@ -22,7 +21,7 @@ def maintenance_histogram(filename):
 # List of unique owners for the streets ["OWN"]
 def unique_owners(filename):
 	lst = []
-        fin = open(filename,'r')
+	fin = open(filename,'r')
 	for line in fin:
 		line = line.split(",")
 		lst.append(line[11])
