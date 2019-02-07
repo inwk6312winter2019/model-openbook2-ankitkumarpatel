@@ -1,37 +1,42 @@
 # model openbook 2 :   task 2
 
-#- Accessible and in a ARTERIAL road
-def access_arter(file1,file2):
-	bus_stop = dict()
-	fin1 = open(file1, 'r')
-	fin2 = open(file2, 'r')
-	for line_f1 in fin1:
-		for line_f2 in fin2:
-			line_f1 = line_f1.split(",")
-			line_f2 = line_f2.split(",")
-			if 'Accessible'in line_f2[9]:
-				if 'ARTERIAL' in line_f1[12]:
-					bus_stop[line_f2[3]] = bus_stop.get(line_f2[3],0)+1
-		
-	return (bus_stop)
+def readingfile(filename):
+    lst = [] 
+    fin = open(filename, 'r')
+    for line in fin:
+        line= line.strip().split(',')
+        lst.append(line) 
+    return(lst)
 
 
-#- Non-Standard and in a LOCAL STREET
+def busstops(street_data,busstop_data):
+    count_arterial_access = 0
+    count_local_non = 0
+    count_minor_inacess = 0
 
 
+    for line in street_data:
+        if 'ARTERIAL' in line[10]:
+            for data in busstop_data:
+                if 'Accessible' in data[7]:
+                    if line[23] == data[9]:
+                        count_arterial_access += 1
+
+        elif 'LOCAL STREET' in line[10]:
+            for data in busstop_data:
+                if 'Non-Standard'in data[7]:
+                    if line[23] == data[9]:
+                        count_local_non += 1
+
+        elif 'MINOR COLLECTOR' in line[10]:
+            for data in busstop_data:
+                if 'Inaccessible'in data[7]:
+                    if line[23] == data[9]:
+                        count_minor_inacess += 1
+
+    return (count_arterial_access,count_local_non,count_minor_inacess)
 
 
-
-
-
-
-#- Inaccessible and in a MINOR COLLECTOR
-
-
-
-
-
-
-
-
-print(access_arter('Street_Centrelines.csv','Bus_Stops.csv'))
+street_list = readingfile('Street_Centrelines.csv')
+busstop_list = readingfile('Bus_Stops.csv')
+print("Bus stop data ::\n\nAccessible and in a ARTERIAL road: %d \nNon-Standard and in a LOCAL STREET: %d \nInaccessible and in a MINOR COLLECTOR: %d"% busstops(street_list,busstop_list))
